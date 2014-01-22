@@ -12,15 +12,38 @@ namespace CIP_test
         private String FIO;
         private List<string> LinkMaterial;
         private int id;
-
-
+        /*
+        public Questions()
+        {
+            this.id = 0;
+            this.Number = 0;
+            this.Name = "";
+            this.FIO = "";
+            List<string>  LinkMaterial = new List<string>();
+        }*/
+        public Questions(string Numb, String Quest_Name, String FirstLastName)
+        {
+            this.id = 0;
+            this.Number = Int32.Parse(Numb.Trim());
+            this.Name = Quest_Name;
+            this.FIO = FirstLastName;
+            LinkMaterial = new List<string>();
+        }
         public Questions(int Numb, String Quest_Name, String FirstLastName)
         {
             this.id = 0;
             this.Number = Numb;
             this.Name = Quest_Name;
             this.FIO = FirstLastName;
-            List<string> LinkMaterial = new List<string>();
+            LinkMaterial = new List<string>();
+        }
+        public Questions(Questions a)
+        {
+            this.id = a.id;
+            this.Number = a.Number;
+            this.Name = a.Name;
+            this.FIO = a.FIO;
+            LinkMaterial = new List<string>(a.GetListMaterials());
         }
         ~Questions()
         {
@@ -38,6 +61,18 @@ namespace CIP_test
             txt += FIO;
 
             return txt;
+        }
+        public string GetNumber()
+        {
+            return this.Number.ToString();
+        }
+        public string GetName()
+        {
+            return this.Name;
+        }
+        public string GetFIO()
+        {
+            return this.FIO;
         }
 
         public void AddMaterial(string Material)
@@ -76,7 +111,15 @@ namespace CIP_test
             }
             return "NULL";
         }
-        public List<string> GetAllMaterials()
+        public string GetMaterial(int id)
+        {
+            if (id <= LinkMaterial.Count && id >= 0)
+            {
+                return LinkMaterial.ElementAt(id);
+            }
+            return "NULL";
+        }
+        public List<string> GetListMaterials()
         {
             return LinkMaterial;
         }

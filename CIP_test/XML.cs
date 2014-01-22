@@ -9,20 +9,20 @@ namespace CIP_test
 {
     public class XML
     {
-        private XmlDocument xmlDoc;
+        //private XmlDocument xmlDoc;
         private String Login, Password, URL;
         private String ServerSetupFileName;
         private String LocalPovestkaFileName;
 
         public XML()
         {
-            xmlDoc = new XmlDocument();
+            //xmlDoc = new XmlDocument();
             ServerSetupFileName = "serversetup.xml";
             LocalPovestkaFileName = "actual.xml";
         }
         ~XML()
         {
-
+            
         }
 
         private void CreateXMLDocumentServerSetup(string filepath)
@@ -149,19 +149,107 @@ namespace CIP_test
             this.WriteToXMLDocumentServerSetup(ServerSetupFileName, Login, Password, URL);
         }
 
-        public void CreatePovestkaXML(Povestka PovestkaToPovestkaXML)
+        public void CreatePovestkaXML(string filepath)
         {
-
+            XmlTextWriter xtw = new XmlTextWriter(filepath, Encoding.UTF32);
+            xtw.WriteStartDocument();
+            xtw.WriteStartElement("povestka");
+            xtw.WriteEndDocument();
+            xtw.Close();
         }
         public Povestka ReadPovestkaXML(string filepath)
         {
             Povestka Apovestka = new Povestka();
             //расшифровка из файла
+            if (File.Exists(filepath))
+            {
+                // Объявляем и забиваем файл в документ  
+                XmlDocument xd = new XmlDocument();
+                FileStream fs = new FileStream(filepath, FileMode.Open);
+                xd.Load(fs);
+
+                XmlNodeList list = xd.GetElementsByTagName("povestka"); // Создаем и заполняем лист по тегу "povestka"  
+               
+                for (int i = 0; i < list.Count; i++)
+                {
+                    XmlElement povestka = (XmlElement)xd.GetElementsByTagName("povestka")[i];         // Забиваем id в переменную  
+                    if (povestka.GetAttribute("id") == "1") // Если наткнулся на нужный айдишник  
+                    {
+                        Apovestka.SetName(povestka.GetAttribute("name"));
+                        Apovestka.SetTime(povestka.GetAttribute("time"));
+                        XmlNodeList list2 = xd.GetElementsByTagName("question");
+                        for (int i2 = 0; i2 < list2.Count; i2++)
+                        {
+                            XmlElement question = (XmlElement)xd.GetElementsByTagName("question")[i2];
+                            Questions QuestTmp = new Questions(question.GetAttribute("number"), question.GetAttribute("name"), question.GetAttribute("FIO"));
+
+                            XmlNodeList list3 = xd.GetElementsByTagName("material");
+                            for (int i3 = 0; i3 < list3.Count; i3++)
+                            {
+                                XmlElement material = (XmlElement)xd.GetElementsByTagName("material")[i3];
+                                material.GetAttribute("id");
+                                string linkmaterial;
+                                linkmaterial = material.InnerText;
+                                QuestTmp.AddMaterial(linkmaterial);
+                            }
+                            Apovestka.AddQuestion(QuestTmp);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                      // скорее всего файла нет
+                    }
+                }
+                // Закрываем поток  
+                fs.Close();
+            }
             return Apovestka;
         }
         public void WritePovestkaXML(Povestka PovestkaToActual, string filepath)
         {
             //зашифровка в файл
+            if (!File.Exists(filepath))
+            {
+                this.CreatePovestkaXML(filepath);
+            }
+            XmlDocument xd = new XmlDocument();
+            FileStream fs = new FileStream(filepath, FileMode.Open);
+            xd.Load(fs);
+
+            // Создаем новую запись povestka c аттрибутом id  
+            XmlElement povestka = xd.CreateElement("povestka");
+            povestka.SetAttribute("id", "1");
+            povestka.SetAttribute("name", PovestkaToActual.GetName());
+            povestka.SetAttribute("time", PovestkaToActual.GetTimeToString());
+
+            List<Questions> ListQuestTmp = new List<Questions>(PovestkaToActual.GetListQuestions());
+            for (int i = 0; i < ListQuestTmp.Count; i++)
+            {
+                XmlElement question = xd.CreateElement("question");
+                
+                question.SetAttribute("id", i.ToString());
+                question.SetAttribute("number", ListQuestTmp.ElementAt(i).GetNumber());
+                question.SetAttribute("name", ListQuestTmp.ElementAt(i).GetName());
+                question.SetAttribute("FIO", ListQuestTmp.ElementAt(i).GetFIO());
+
+                List<string> LinkMaterialTmp = new List<string>(ListQuestTmp.ElementAt(i).GetListMaterials());
+                for(int ii=0; ii<LinkMaterialTmp.Count; ii++)
+                {
+                    XmlElement material = xd.CreateElement("material");
+                    material.SetAttribute("id", ii.ToString());
+                    XmlText tMaterial = xd.CreateTextNode(LinkMaterialTmp.ElementAt(ii));
+                    material.AppendChild(tMaterial);
+                    question.AppendChild(material);
+                }
+                povestka.AppendChild(question);
+            }
+
+            // ЗАбиваем запись в документ  
+            xd.DocumentElement.AppendChild(povestka);
+
+            fs.Close();         // Закрываем поток  
+            xd.Save(filepath); // Сохраняем файл  
         }
   
     }

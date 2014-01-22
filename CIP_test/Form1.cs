@@ -12,13 +12,13 @@ using System.Windows.Forms;
 namespace CIP_test
 {
 
-
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-
+            Povestka pov1 = new Povestka();
+            pov1.LoadAtFile("1.xml");
         }
 
         private void timer1_Tick(object sender, EventArgs e)

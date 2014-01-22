@@ -7,12 +7,12 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace FTP_File
+namespace CIP_test
 {
-    internal class __FtpDownload
+    public class ServerCIP
     {
         [DllImport("WININET", EntryPoint = "InternetOpen",
-            SetLastError = true, CharSet = CharSet.Auto)]
+        SetLastError = true, CharSet = CharSet.Auto)]
         static extern IntPtr __InternetOpen(
             string lpszAgent,
             int dwAccessType,
@@ -61,88 +61,6 @@ namespace FTP_File
         const int INTERNET_OPEN_TYPE_DIRECT = 1;
         const int INTERNET_SERVICE_FTP = 1;
 
-        static void Main()
-        {
-            IntPtr inetHandle = IntPtr.Zero;
-            IntPtr ftpconnectHandle = IntPtr.Zero;
-
-            try
-            {
-                //check for inet connection
-                if (__InternetAttemptConnect(0) != ERROR_SUCCESS)
-                {
-                    throw new InvalidOperationException(
-                        "no connection to internet available");
-                }
-
-                //connect to inet
-                inetHandle = __InternetOpen(
-                    "billyboy FTP", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
-                if (inetHandle == IntPtr.Zero)
-                {
-                    throw new NullReferenceException(
-                        "couldn't establish a connection to the internet");
-                }
-
-                //connect to ftp.microsoft.com
-                ftpconnectHandle = __InternetConnect(
-                    inetHandle, "ftp.microsoft.com", 21, "anonymous",
-                    "myemail@yahoo.com", INTERNET_SERVICE_FTP,
-                    0, 0);
-                if (ftpconnectHandle == IntPtr.Zero)
-                {
-                    throw new NullReferenceException(
-                        "couldn't connect to microsoft.com");
-                }
-
-                //set to desired directory on FTP server
-                if (!__FtpSetCurrentDirectory(ftpconnectHandle, "/deskapps"))
-                {
-                    throw new InvalidOperationException(
-                        "couldn't set to desired directory");
-                }
-
-                //download file from server
-                if (!__FtpGetFile(ftpconnectHandle, "readme.txt",
-                                   "c:\\downloadedFile1.txt", false, 0, 0, 0))
-                {
-                    throw new IOException("couldn't download file");
-                }
-
-                //success
-                Console.WriteLine("SUCCESS: file downloaded successfully");
-            }
-            catch (Exception ex)
-            {
-                //print error message
-                Console.WriteLine("ERROR: " + ex.Message);
-            }
-            finally
-            {
-                //close connection to ftp.microsoft.com
-                if (ftpconnectHandle != IntPtr.Zero)
-                {
-                    __InternetCloseHandle(ftpconnectHandle);
-                }
-                ftpconnectHandle = IntPtr.Zero;
-
-                //close connection to inet
-                if (inetHandle != IntPtr.Zero)
-                {
-                    __InternetCloseHandle(inetHandle);
-                }
-                inetHandle = IntPtr.Zero;
-            }
-
-            Console.ReadLine();
-        }
-    }
-}
-
-namespace CIP_test
-{
-    public class ServerCIP
-    {
         private String URL;
         private String login;
         private String password;
@@ -225,18 +143,6 @@ namespace CIP_test
             }
         }
 
-        private bool Autorize()
-        {
-            if (this.TestInternet())
-            {
-                this.LoadSetup();
-                //авторизация на сервере
-
-                return true;
-            }
-            return false;
-        }
-
         private DateTime TestXMLFileDate(string locationfilename)
         {
             DateTime TestFileData = new DateTime(2014,1,21);
@@ -244,21 +150,93 @@ namespace CIP_test
             
             return TestFileData;
         }
-        private void LoadFileURL(string locationfilename)
+        private void LoadFileURL(string filename, string localfilename)
         {
             //загрузка файла 
+            IntPtr inetHandle = IntPtr.Zero;
+            IntPtr ftpconnectHandle = IntPtr.Zero;
+
+            try
+            {
+                //check for inet connection
+                if (__InternetAttemptConnect(0) != ERROR_SUCCESS)
+                {
+                    throw new InvalidOperationException(
+                        "no connection to internet available");
+                }
+
+                //connect to inet
+                inetHandle = __InternetOpen(
+                    "billyboy FTP", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
+                if (inetHandle == IntPtr.Zero)
+                {
+                    throw new NullReferenceException(
+                        "couldn't establish a connection to the internet");
+                }
+
+                //connect to ftp
+                ftpconnectHandle = __InternetConnect(
+                    inetHandle, URL, 21, login,
+                    password, INTERNET_SERVICE_FTP,
+                    0, 0);
+                if (ftpconnectHandle == IntPtr.Zero)
+                {
+                    throw new NullReferenceException(
+                        "couldn't connect");
+                }
+
+                //set to desired directory on FTP server
+                if (!__FtpSetCurrentDirectory(ftpconnectHandle, "/CIP"))
+                {
+                    throw new InvalidOperationException(
+                        "couldn't set to desired directory");
+                }
+
+                //download file from server
+                if (!__FtpGetFile(ftpconnectHandle, filename,
+                                   localfilename, false, 0, 0, 0))
+                {
+                    throw new IOException("couldn't download file");
+                }
+
+                //success
+                Console.WriteLine("SUCCESS: file downloaded successfully");
+            }
+            catch (Exception ex)
+            {
+                //print error message
+                Console.WriteLine("ERROR: " + ex.Message);
+            }
+            finally
+            {
+                //close connection to ftp
+                if (ftpconnectHandle != IntPtr.Zero)
+                {
+                    __InternetCloseHandle(ftpconnectHandle);
+                }
+                ftpconnectHandle = IntPtr.Zero;
+
+                //close connection to inet
+                if (inetHandle != IntPtr.Zero)
+                {
+                    __InternetCloseHandle(inetHandle);
+                }
+                inetHandle = IntPtr.Zero;
+            }
+
+            Console.ReadLine();
         }
 
         void UpdatePovestkaXML()
         {
-            if (this.Autorize())
+            if (this.TestInternet())
             {
                 string urlFilename;
                 urlFilename = URL;
                 urlFilename += PoveskaFileServerName;
                 if (LastUpdate.CompareTo(this.TestXMLFileDate(urlFilename)) < 0)
                 {
-                    this.LoadFileURL(urlFilename);
+                    this.LoadFileURL(PoveskaFileServerName, PoveskaFileLocalName);
                     XML Bxml = new XML();
                     Povestka TempPovestka = new Povestka();
                     TempPovestka.LoadAtFile(PoveskaFileServerName);
@@ -266,7 +244,7 @@ namespace CIP_test
                     //Скачивание материалов повестки
                     for (int i = 0; i < AllMaterials.Count; i++)
                     {
-                        this.LoadFileURL(AllMaterials.ElementAt(i));
+                        this.LoadFileURL(AllMaterials.ElementAt(i), AllMaterials.ElementAt(i));
                     }
 
                     //Преобразование повестки в сохраняемую
