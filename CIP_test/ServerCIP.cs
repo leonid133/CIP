@@ -11,7 +11,7 @@ namespace CIP_test
 {
     public class ServerCIP
     {
-        [DllImport("WININET", EntryPoint = "InternetOpen",
+       /* [DllImport("WININET", EntryPoint = "InternetOpen",
         SetLastError = true, CharSet = CharSet.Auto)]
         static extern IntPtr __InternetOpen(
             string lpszAgent,
@@ -60,7 +60,7 @@ namespace CIP_test
         const int ERROR_SUCCESS = 0;
         const int INTERNET_OPEN_TYPE_DIRECT = 1;
         const int INTERNET_SERVICE_FTP = 1;
-
+        */
         private String URL;
         private String login;
         private String password;
@@ -72,12 +72,8 @@ namespace CIP_test
         {
             PoveskaFileServerName = "povestka.xml";
             PoveskaFileLocalName = "actual.xml";
-            LastUpdate = this.TestXMLFileDate(PoveskaFileLocalName);
-            XML Axml = new XML();
-            URL = Axml.GetURL_serversetup();
-            login = Axml.GetLogin_serversetup();
-            password = Axml.GetPassword_serversetup();
-
+            LastUpdate = File.GetLastWriteTime(PoveskaFileLocalName);
+            LoadSetup();
         }
         ~ServerCIP()
         {
@@ -97,7 +93,7 @@ namespace CIP_test
             password = Axml.GetPassword_serversetup();
         }
 
-        public void Set(string log, string pas, string url_)
+        public void SetLoginPasswordURL(string log, string pas, string url_)
         {
             URL = url_;
             login = log;
@@ -107,17 +103,14 @@ namespace CIP_test
 
         public String GetURL()
         {
-            this.LoadSetup();
             return URL;
         }
         public String GetLogin()
         {
-            this.LoadSetup();
             return login;
         }
         public String GetPassword()
         {
-            this.LoadSetup();
             return password;
         }
 
@@ -143,14 +136,69 @@ namespace CIP_test
 
         private DateTime TestXMLFileDate(string locationfilename)
         {
-            DateTime TestFileData = new DateTime(2014,1,21);
-            // узнавание времени последнего редактирования файла
-            
+            DateTime TestFileData;
+            try
+            {
+                // узнавание времени последнего редактирования файла на сервере
+                //Create FTP request & login to server 
+                FtpWebRequest request = FtpWebRequest.Create(URL + "/CIP/" + locationfilename) as FtpWebRequest;
+                request.Credentials = new NetworkCredential(login, password);
+
+                //Get the DATE & TIME stamp of the file 
+                request.Method = WebRequestMethods.Ftp.GetDateTimestamp;
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+                TestFileData = response.LastModified;
+                
+            }
+            catch
+            { 
+                TestFileData = new DateTime(1985, 4, 2);
+            }
             return TestFileData;
         }
-        private void LoadFileURL(string filename, string localfilename)
+        private void LoadFileURL(string filename)
         {
             //загрузка файла 
+            // Get the object used to communicate with the server.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(URL + "/CIP/" + filename);
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+            // This example assumes the FTP site uses anonymous logon.
+            request.Credentials = new NetworkCredential(login, password);
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            Stream responseStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+
+            File.WriteAllText(filename, reader.ReadToEnd());
+
+            //Console.WriteLine(reader.ReadToEnd());
+
+            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
+
+            reader.Close();
+            response.Close(); 
+            /*
+            //Create FTP request & login to server 
+            FtpWebRequest request = FtpWebRequest.Create(URL + "/CIP/" + filename) as FtpWebRequest;
+            request.Credentials = new NetworkCredential(login, password);
+
+            //download file
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            Stream responseStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+            Console.WriteLine(reader.ReadToEnd());
+
+            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
+
+            reader.Close();
+            response.Close(); 
+             */
+            /*
             IntPtr inetHandle = IntPtr.Zero;
             IntPtr ftpconnectHandle = IntPtr.Zero;
 
@@ -223,18 +271,16 @@ namespace CIP_test
             }
 
             Console.ReadLine();
+            */
         }
 
-        void UpdatePovestkaXML()
+        public void UpdatePovestkaXML()
         {
-            if (this.TestInternet())
+            if (TestInternet())
             {
-                string urlFilename;
-                urlFilename = URL;
-                urlFilename += PoveskaFileServerName;
-                if (LastUpdate.CompareTo(this.TestXMLFileDate(urlFilename)) < 0)
+                if (LastUpdate.CompareTo(TestXMLFileDate(PoveskaFileServerName)) < 0)
                 {
-                    this.LoadFileURL(PoveskaFileServerName, PoveskaFileLocalName);
+                    LoadFileURL(PoveskaFileServerName);
                     XML Bxml = new XML();
                     Povestka TempPovestka = new Povestka();
                     TempPovestka.LoadAtFile(PoveskaFileServerName);
@@ -242,7 +288,7 @@ namespace CIP_test
                     //Скачивание материалов повестки
                     for (int i = 0; i < AllMaterials.Count; i++)
                     {
-                        this.LoadFileURL(AllMaterials.ElementAt(i), AllMaterials.ElementAt(i));
+                        LoadFileURL(AllMaterials.ElementAt(i));
                     }
 
                     //Преобразование повестки в сохраняемую

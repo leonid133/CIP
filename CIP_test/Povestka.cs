@@ -121,8 +121,8 @@ namespace CIP_test
         }
         public List<string> GetAllMaterials()
         {
-            List<string> AllMaterials = new List<string>(Question.ElementAt(0).GetListMaterials());
-            for (int i = 1; i < Question.Count; i++)
+            List<string> AllMaterials = new List<string>();
+            for (int i = 0; i < Question.Count; i++)
             {
                 AllMaterials.Concat(Question.ElementAt(i).GetListMaterials());
             }

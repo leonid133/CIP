@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-32"?>
+<povestka>
+  <povestka id="1" name="Повестка дня четырнадцатого заседания Государственного Совета Республики" time="21.01.2014 0:00:00">
+    <question id="0" number="1" name="Об избрании мировых судей Республики Татарстан" FIO="">
+      <material id="0">1.jpg</material>
+      <material id="0">2.jpg</material>
+      <material id="0">3.jpg</material>
+    </question>
+    <question id="1" number="2" name="О проекте закона Республики Татарстан №6181-4 Об установлении на 2011 год велечины прожиточного минимума пенсионера в Республике Татарстан для определения размера федеральной социальной доплаты к пенсии" FIO="">
+      <material id="1">4.jpg</material>
+      <material id="1">5.jpg</material>
+      <material id="1">6.jpg</material>
+    </question>
+  </povestka>
+</povestka>
