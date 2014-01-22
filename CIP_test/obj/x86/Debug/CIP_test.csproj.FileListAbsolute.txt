@@ -34,3 +34,12 @@ E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
 E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog
 E:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.exe
 E:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.pdb
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\CIP_test.exe
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\CIP_test.pdb
+C:\Users\User\Documents\GitHub\CIP\CIP_test\bin\Debug\CIP_test.exe
+C:\Users\User\Documents\GitHub\CIP\CIP_test\bin\Debug\CIP_test.pdb
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\CIP_test.Form1.resources
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\CIP_test.Properties.Resources.resources
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\User\Documents\GitHub\CIP\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog

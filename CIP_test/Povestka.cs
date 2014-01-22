@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using System.IO;
 
 namespace CIP_test
 {
@@ -16,7 +17,8 @@ namespace CIP_test
         public Povestka()
         {
             Question = new List<Questions>();
-            DateTime DatePovestka = new DateTime(2014, 1, 21);
+            DatePovestka = new DateTime(2014, 1, 21);
+            LastLoadDate = new DateTime(1985, 4, 2);
         }
 
         public Povestka(Povestka a)
@@ -129,8 +131,17 @@ namespace CIP_test
         private bool ActualLoad(string filepath)
         {
             //Сравнивает дату последней загрузки и дату файла который собираемся загружать, если загружаемый файл новее тогда выдает false
-
-            return false;
+            try
+            {
+                DateTime dt = File.GetLastWriteTime(filepath);
+                if (LastLoadDate.CompareTo(dt)<0)
+                    return false;
+                else return true;
+            }
+            catch
+            {
+                return false;//если поменять на 1, то будет работать как защита от чтения отсутствующего файла
+            }
         }
 
         public void LoadAtFile(string filepath)

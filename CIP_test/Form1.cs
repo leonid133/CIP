@@ -20,9 +20,10 @@ namespace CIP_test
         {
             InitializeComponent();
             pov1 = new Povestka();
-            /*
+            
             pov1.GenerateTestDATA();
-            pov1.SaveToFile("1.xml");*/
+            pov1.SaveToFile("1.xml");
+            pov1.LoadAtFile("1.xml");
             pov1.LoadAtFile("1.xml");
         }
 
