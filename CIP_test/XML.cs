@@ -133,22 +133,14 @@ namespace CIP_test
             return URL;
         }
 
-        public void SetLogin_serversetup(string Login_)
+        public void SaveLoginPasswordURL_serversetup(string Login_, string Password_, string URL_)
         {
             this.Login = Login_;
-            this.WriteToXMLDocumentServerSetup(ServerSetupFileName, Login, Password, URL);
-        }
-        public void SetPassword_serversetup(string Password_)
-        {
             this.Password = Password_;
-            this.WriteToXMLDocumentServerSetup(ServerSetupFileName, Login, Password, URL);
-        }
-        public void SetURL_serversetup(string URL_)
-        {
             this.URL = URL_;
             this.WriteToXMLDocumentServerSetup(ServerSetupFileName, Login, Password, URL);
         }
-
+   
         public void CreatePovestkaXML(string filepath)
         {
             XmlTextWriter xtw = new XmlTextWriter(filepath, Encoding.UTF32);

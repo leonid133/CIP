@@ -86,9 +86,7 @@ namespace CIP_test
         private void SaveSetup()
         {
             XML Axml = new XML();
-            Axml.SetLogin_serversetup(login);
-            Axml.SetPassword_serversetup(password);
-            Axml.SetURL_serversetup(URL);
+            Axml.SaveLoginPasswordURL_serversetup(login, password, URL);
         }
 
         private void LoadSetup()
