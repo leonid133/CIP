@@ -1,0 +1,36 @@
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\bin\Debug\CIP_test.exe
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\bin\Debug\CIP_test.pdb
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\CIP_test.Properties.Resources.resources
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\CIP_test.exe
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\CIP_test.pdb
+C:\Users\Lenin133\AppData\Local\Temporary Projects\CIP_test\obj\x86\Debug\CIP_test.Form1.resources
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.exe
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.pdb
+D:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.exe
+D:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.pdb
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Properties.Resources.resources
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Form1.resources
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.exe
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.pdb
+H:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.exe
+H:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.pdb
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\ResolveAssemblyReference.cache
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Properties.Resources.resources
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog
+H:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Form1.resources
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.exe
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.pdb
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Form1.resources
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\CIP_test.Properties.Resources.resources
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\VS2010_Proj\CIP_test\CIP_test\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.exe
+E:\VS2010_Proj\CIP_test\CIP_test\bin\Debug\CIP_test.pdb
