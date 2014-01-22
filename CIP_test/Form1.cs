@@ -14,10 +14,15 @@ namespace CIP_test
 
     public partial class Form1 : Form
     {
+        Povestka pov1;
+
         public Form1()
         {
             InitializeComponent();
-            Povestka pov1 = new Povestka();
+            pov1 = new Povestka();
+            /*
+            pov1.GenerateTestDATA();
+            pov1.SaveToFile("1.xml");*/
             pov1.LoadAtFile("1.xml");
         }
 

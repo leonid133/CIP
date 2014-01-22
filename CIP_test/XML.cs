@@ -7,7 +7,7 @@ using System.IO;
 
 namespace CIP_test
 {
-    public class XML
+    public class XML: Povestka
     {
         //private XmlDocument xmlDoc;
         private String Login, Password, URL;
@@ -187,10 +187,10 @@ namespace CIP_test
                             for (int i3 = 0; i3 < list3.Count; i3++)
                             {
                                 XmlElement material = (XmlElement)xd.GetElementsByTagName("material")[i3];
-                                material.GetAttribute("id");
                                 string linkmaterial;
                                 linkmaterial = material.InnerText;
-                                QuestTmp.AddMaterial(linkmaterial);
+                                if (Int32.Parse(material.GetAttribute("id")) == i2)
+                                    QuestTmp.AddMaterial(linkmaterial);
                             }
                             Apovestka.AddQuestion(QuestTmp);
                         }
@@ -209,7 +209,7 @@ namespace CIP_test
         public void WritePovestkaXML(Povestka PovestkaToActual, string filepath)
         {
             //зашифровка в файл
-            if (!File.Exists(filepath))
+           // if (!File.Exists(filepath)) -если раскомментировать, то можно не перезаписывать файл, а писать дальше в него, на случай модернизации для множества повесток
             {
                 this.CreatePovestkaXML(filepath);
             }
@@ -237,7 +237,7 @@ namespace CIP_test
                 for(int ii=0; ii<LinkMaterialTmp.Count; ii++)
                 {
                     XmlElement material = xd.CreateElement("material");
-                    material.SetAttribute("id", ii.ToString());
+                    material.SetAttribute("id", i.ToString());
                     XmlText tMaterial = xd.CreateTextNode(LinkMaterialTmp.ElementAt(ii));
                     material.AppendChild(tMaterial);
                     question.AppendChild(material);

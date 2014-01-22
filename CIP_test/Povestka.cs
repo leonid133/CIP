@@ -60,16 +60,17 @@ namespace CIP_test
         }
         private DateTime DecodeTime(string time)
         {
-            CultureInfo MyCultureInfo = new CultureInfo("ru-RU");
+            
             /*
             int day = Int32.Parse(time.Split('.')[0].Trim());
             int month = Int32.Parse(time.Split('.')[1].Trim());
-            int year = Int32.Parse(time.Split(' ')[0]);
-            int hour = Int32.Parse(time.Split(':')[1].Trim());
-            int minute = Int32.Parse(time.Split(':')[2].Trim());
+            int year = Int32.Parse(time.Split(' '));
+            int hour = Int32.Parse(time.Split(':')[0].Trim());
+            int minute = Int32.Parse(time.Split(':')[1].Trim());
 
             DateTime decode = new DateTime(year, month, day, hour, minute, 0);
             */
+            CultureInfo MyCultureInfo = new CultureInfo("ru-RU");
             DateTime decode = DateTime.Parse(time, MyCultureInfo,
                                            DateTimeStyles.NoCurrentDateDefault);
 
@@ -142,6 +143,8 @@ namespace CIP_test
                 this.Name = TempPovestka.Name;
                 this.LastLoadDate = TempPovestka.LastLoadDate;
                 List<Questions> Question = new List<Questions>(TempPovestka.Question);
+                DateTime dateNow = DateTime.Now;
+                LastLoadDate = dateNow;
             }
         }
 
