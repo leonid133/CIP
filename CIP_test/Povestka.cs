@@ -63,15 +63,6 @@ namespace CIP_test
         private DateTime DecodeTime(string time)
         {
             
-            /*
-            int day = Int32.Parse(time.Split('.')[0].Trim());
-            int month = Int32.Parse(time.Split('.')[1].Trim());
-            int year = Int32.Parse(time.Split(' '));
-            int hour = Int32.Parse(time.Split(':')[0].Trim());
-            int minute = Int32.Parse(time.Split(':')[1].Trim());
-
-            DateTime decode = new DateTime(year, month, day, hour, minute, 0);
-            */
             CultureInfo MyCultureInfo = new CultureInfo("ru-RU");
             DateTime decode = DateTime.Parse(time, MyCultureInfo,
                                            DateTimeStyles.NoCurrentDateDefault);
@@ -100,6 +91,8 @@ namespace CIP_test
         }
         public string GetStringQuestAt(int id)
         {
+            if (id >= this.Question.Count) id = this.Question.Count - 1;
+            if (id < 0) id = 0;
             return this.Question.ElementAt(id).GetStringData();
         }
         public List<Questions> GetListQuestions()
@@ -113,14 +106,20 @@ namespace CIP_test
 
         public String GetFirstMaterialAtQuestion(int id_Question)
         {
+            if (id_Question >= this.Question.Count) id_Question = this.Question.Count - 1;
+            if (id_Question < 0) id_Question = 0;
             return Question.ElementAt(id_Question).GetMaterial();
         }
         public String GetNextMaterialAtQuestion(int id_Question)
         {
+            if (id_Question >= this.Question.Count) id_Question = this.Question.Count - 1;
+            if (id_Question < 0) id_Question = 0;
             return Question.ElementAt(id_Question).GetMaterial("NEXT");
         }
         public String GetLastMaterialAtQuestion(int id_Question)
         {
+            if (id_Question >= this.Question.Count) id_Question = this.Question.Count - 1;
+            if (id_Question < 0) id_Question = 0;
             return Question.ElementAt(id_Question).GetMaterial("LAST");
         }
         public List<string> GetAllMaterials()
