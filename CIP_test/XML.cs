@@ -7,7 +7,7 @@ using System.IO;
 
 namespace CIP_test
 {
-    public class XML: Povestka
+    public class XML
     {
         //private XmlDocument xmlDoc;
         private String Login, Password, URL;

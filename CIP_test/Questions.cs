@@ -43,7 +43,8 @@ namespace CIP_test
             this.Number = a.Number;
             this.Name = a.Name;
             this.FIO = a.FIO;
-            LinkMaterial = new List<string>(a.GetListMaterials());
+            LinkMaterial = new List<string>();
+            LinkMaterial = a.LinkMaterial;
         }
         ~Questions()
         {

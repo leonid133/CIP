@@ -11,56 +11,6 @@ namespace CIP_test
 {
     public class ServerCIP
     {
-       /* [DllImport("WININET", EntryPoint = "InternetOpen",
-        SetLastError = true, CharSet = CharSet.Auto)]
-        static extern IntPtr __InternetOpen(
-            string lpszAgent,
-            int dwAccessType,
-            string lpszProxyName,
-            string lpszProxyBypass,
-            int dwFlags);
-
-        [DllImport("WININET", EntryPoint = "InternetCloseHandle",
-            SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool __InternetCloseHandle(IntPtr hInternet);
-
-        [DllImport("WININET", EntryPoint = "InternetConnect",
-            SetLastError = true, CharSet = CharSet.Auto)]
-        static extern IntPtr __InternetConnect(
-            IntPtr hInternet,
-            string lpszServerName,
-            int nServerPort,
-            string lpszUsername,
-            string lpszPassword,
-            int dwService,
-            int dwFlags,
-            int dwContext);
-
-        [DllImport("WININET", EntryPoint = "FtpSetCurrentDirectory",
-            SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool __FtpSetCurrentDirectory(
-            IntPtr hConnect,
-            string lpszDirectory);
-
-        [DllImport("WININET", EntryPoint = "InternetAttemptConnect",
-            SetLastError = true, CharSet = CharSet.Auto)]
-        static extern int __InternetAttemptConnect(int dwReserved);
-
-        [DllImport("WININET", EntryPoint = "FtpGetFile",
-            SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool __FtpGetFile(
-            IntPtr hConnect,
-            string lpszRemoteFile,
-            string lpszNewFile,
-            bool fFailIfExists,
-            FileAttributes dwFlagsAndAttributes,
-            int dwFlags,
-            int dwContext);
-
-        const int ERROR_SUCCESS = 0;
-        const int INTERNET_OPEN_TYPE_DIRECT = 1;
-        const int INTERNET_SERVICE_FTP = 1;
-        */
         private String URL;
         private String login;
         private String password;
@@ -157,22 +107,56 @@ namespace CIP_test
             }
             return TestFileData;
         }
+        private void LoadFileURL(List<string> ListFile)
+        {
+            //загрузка файлов материалов
+            for (int i = 0; i < ListFile.Count; i++)
+            {
+                string filename = ListFile.ElementAt(i);
+                bool status = true;
+                string webError = string.Empty;
+                FtpWebResponse response = null;
+                Stream ftpStream = null;
+                FileStream outputStream = null;
+                //FtpDownloadToFolder = @"\\servername\SharedFolder\";
+
+                FtpWebRequest reqFTP = WebRequest.Create(new Uri(URL + "/CIP/" + filename)) as FtpWebRequest;
+                reqFTP.Credentials = new NetworkCredential(login, password);
+                reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
+                reqFTP.UseBinary = true;
+                //reqFTP.Timeout = FtpTimeout;
+                response = reqFTP.GetResponse() as FtpWebResponse;
+                ftpStream = response.GetResponseStream();
+
+                outputStream = new FileStream(filename, FileMode.Create);
+
+                long cl = response.ContentLength;
+                int bufferSize = 2048;
+                byte[] buffer = new byte[bufferSize];
+                int readCount = ftpStream.Read(buffer, 0, bufferSize);
+
+                while (readCount > 0)
+                {
+                    outputStream.Write(buffer, 0, readCount);
+                    readCount = ftpStream.Read(buffer, 0, bufferSize);
+                }
+            }
+        }
         private void LoadFileURL(string filename)
         {
-            //загрузка файла 
+            //загрузка файла повестки
             // Get the object used to communicate with the server.
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(URL + "/CIP/" + filename);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
             // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential(login, password);
-
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
 
-            File.WriteAllText(filename, reader.ReadToEnd());
+            File.WriteAllText(filename, reader.ReadToEnd(), Encoding.UTF32);
 
             //Console.WriteLine(reader.ReadToEnd());
 
@@ -180,105 +164,14 @@ namespace CIP_test
 
             reader.Close();
             response.Close(); 
-            /*
-            //Create FTP request & login to server 
-            FtpWebRequest request = FtpWebRequest.Create(URL + "/CIP/" + filename) as FtpWebRequest;
-            request.Credentials = new NetworkCredential(login, password);
-
-            //download file
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-            Console.WriteLine(reader.ReadToEnd());
-
-            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
-
-            reader.Close();
-            response.Close(); 
-             */
-            /*
-            IntPtr inetHandle = IntPtr.Zero;
-            IntPtr ftpconnectHandle = IntPtr.Zero;
-
-            try
-            {
-                //check for inet connection
-                if (__InternetAttemptConnect(0) != ERROR_SUCCESS)
-                {
-                    throw new InvalidOperationException(
-                        "no connection to internet available");
-                }
-
-                //connect to inet
-                inetHandle = __InternetOpen(
-                    "billyboy FTP", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
-                if (inetHandle == IntPtr.Zero)
-                {
-                    throw new NullReferenceException(
-                        "couldn't establish a connection to the internet");
-                }
-
-                //connect to ftp
-                ftpconnectHandle = __InternetConnect(
-                    inetHandle, URL, 21, login,
-                    password, INTERNET_SERVICE_FTP,
-                    0, 0);
-                if (ftpconnectHandle == IntPtr.Zero)
-                {
-                    throw new NullReferenceException(
-                        "couldn't connect");
-                }
-
-                //set to desired directory on FTP server
-                if (!__FtpSetCurrentDirectory(ftpconnectHandle, "/CIP"))
-                {
-                    throw new InvalidOperationException(
-                        "couldn't set to desired directory");
-                }
-
-                //download file from server
-                if (!__FtpGetFile(ftpconnectHandle, filename,
-                                   localfilename, false, 0, 0, 0))
-                {
-                    throw new IOException("couldn't download file");
-                }
-
-                //success
-                Console.WriteLine("SUCCESS: file downloaded successfully");
-            }
-            catch (Exception ex)
-            {
-                //print error message
-                Console.WriteLine("ERROR: " + ex.Message);
-            }
-            finally
-            {
-                //close connection to ftp
-                if (ftpconnectHandle != IntPtr.Zero)
-                {
-                    __InternetCloseHandle(ftpconnectHandle);
-                }
-                ftpconnectHandle = IntPtr.Zero;
-
-                //close connection to inet
-                if (inetHandle != IntPtr.Zero)
-                {
-                    __InternetCloseHandle(inetHandle);
-                }
-                inetHandle = IntPtr.Zero;
-            }
-
-            Console.ReadLine();
-            */
+            
         }
 
         public void UpdatePovestkaXML()
         {
             if (TestInternet())
             {
-                if (LastUpdate.CompareTo(TestXMLFileDate(PoveskaFileServerName)) < 0)
+                //if (LastUpdate.CompareTo(TestXMLFileDate(PoveskaFileServerName)) < 0)
                 {
                     LoadFileURL(PoveskaFileServerName);
                     XML Bxml = new XML();
@@ -286,11 +179,8 @@ namespace CIP_test
                     TempPovestka.LoadAtFile(PoveskaFileServerName);
                     List<string> AllMaterials = new List<string>(TempPovestka.GetAllMaterials());
                     //Скачивание материалов повестки
-                    for (int i = 0; i < AllMaterials.Count; i++)
-                    {
-                        LoadFileURL(AllMaterials.ElementAt(i));
-                    }
-
+                    LoadFileURL(AllMaterials);
+                  
                     //Преобразование повестки в сохраняемую
 
                     TempPovestka.SaveToFile(PoveskaFileLocalName);
