@@ -121,10 +121,15 @@ namespace CIP_test
         }
         public List<string> GetAllMaterials()
         {
-            List<string> AllMaterials = new List<string>(Question.ElementAt(0).GetListMaterials());
-            for (int i = 1; i < Question.Count; i++)
+            List<string> AllMaterials = new List<string>();
+            for (int i = 0; i < Question.Count; i++)
             {
-                AllMaterials.Concat(Question.ElementAt(i).GetListMaterials());
+                List<string> tempListMaterials = new List<string>();
+                tempListMaterials = Question.ElementAt(i).GetListMaterials();
+                for(int i2=0; i2<tempListMaterials.Count; i2++)
+                {
+                    AllMaterials.Add(tempListMaterials.ElementAt(i2));
+                }
             }
             return AllMaterials;
         }
@@ -153,7 +158,7 @@ namespace CIP_test
                 this.DatePovestka = TempPovestka.DatePovestka;
                 this.Name = TempPovestka.Name;
                 this.LastLoadDate = TempPovestka.LastLoadDate;
-                List<Questions> Question = new List<Questions>(TempPovestka.Question);
+                this.Question = TempPovestka.Question;
                 DateTime dateNow = DateTime.Now;
                 LastLoadDate = dateNow;
             }

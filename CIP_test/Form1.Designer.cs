@@ -49,10 +49,10 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.panelServerSetup = new System.Windows.Forms.Panel();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.buttonSaveServerSetup = new System.Windows.Forms.Button();
-            this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.textBoxURL = new System.Windows.Forms.TextBox();
+            this.textBoxLogin = new System.Windows.Forms.TextBox();
+            this.buttonSaveServerSetup = new System.Windows.Forms.Button();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonServerSetting = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -171,8 +171,14 @@
             this.textBox2.Size = new System.Drawing.Size(580, 73);
             this.textBox2.TabIndex = 2;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -226,13 +232,24 @@
             this.panelServerSetup.TabIndex = 5;
             this.panelServerSetup.Visible = false;
             // 
-            // textBoxPassword
+            // textBoxURL
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(0, 39);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(101, 20);
-            this.textBoxPassword.TabIndex = 1;
-            this.textBoxPassword.Text = "Password";
+            this.textBoxURL.Location = new System.Drawing.Point(0, 0);
+            this.textBoxURL.Name = "textBoxURL";
+            this.textBoxURL.Size = new System.Drawing.Size(181, 20);
+            this.textBoxURL.TabIndex = 3;
+            this.textBoxURL.Text = "URL";
+            this.textBoxURL.Click += new System.EventHandler(this.textBoxURL_Click);
+            this.textBoxURL.TextChanged += new System.EventHandler(this.textBoxURL_TextChanged);
+            // 
+            // textBoxLogin
+            // 
+            this.textBoxLogin.Location = new System.Drawing.Point(0, 20);
+            this.textBoxLogin.Name = "textBoxLogin";
+            this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
+            this.textBoxLogin.TabIndex = 0;
+            this.textBoxLogin.Text = "Login";
+            this.textBoxLogin.Click += new System.EventHandler(this.textBoxLogin_Click);
             // 
             // buttonSaveServerSetup
             // 
@@ -244,21 +261,14 @@
             this.buttonSaveServerSetup.UseVisualStyleBackColor = true;
             this.buttonSaveServerSetup.Click += new System.EventHandler(this.buttonSaveServerSetup_Click);
             // 
-            // textBoxLogin
+            // textBoxPassword
             // 
-            this.textBoxLogin.Location = new System.Drawing.Point(0, 20);
-            this.textBoxLogin.Name = "textBoxLogin";
-            this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
-            this.textBoxLogin.TabIndex = 0;
-            this.textBoxLogin.Text = "Login";
-            // 
-            // textBoxURL
-            // 
-            this.textBoxURL.Location = new System.Drawing.Point(0, 0);
-            this.textBoxURL.Name = "textBoxURL";
-            this.textBoxURL.Size = new System.Drawing.Size(181, 20);
-            this.textBoxURL.TabIndex = 3;
-            this.textBoxURL.Text = "URL";
+            this.textBoxPassword.Location = new System.Drawing.Point(0, 39);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(101, 20);
+            this.textBoxPassword.TabIndex = 1;
+            this.textBoxPassword.Text = "Password";
+            this.textBoxPassword.Click += new System.EventHandler(this.textBoxPassword_Click);
             // 
             // buttonServerSetting
             // 

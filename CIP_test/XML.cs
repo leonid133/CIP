@@ -7,7 +7,7 @@ using System.IO;
 
 namespace CIP_test
 {
-    public class XML: Povestka
+    public class XML
     {
         //private XmlDocument xmlDoc;
         private String Login, Password, URL;
@@ -35,7 +35,7 @@ namespace CIP_test
         }
         private void WriteToXMLDocumentServerSetup(string filepath, string name, string pwd, string urll)
         {
-            if (!File.Exists(filepath))
+            //if (!File.Exists(filepath))
             {
                 this.CreateXMLDocumentServerSetup(filepath);
             }
@@ -72,64 +72,46 @@ namespace CIP_test
             fs.Close();         // Закрываем поток  
             xd.Save(filepath); // Сохраняем файл  
         }
-        private void ReadXMLDocumentServerSetup(string filepath, string pid)
+        private void ReadXMLDocumentServerSetup(string filepath)
         {
             if (File.Exists(filepath))
             {
-                string name, pwd, url_; // Новые переменные имени и пароля  
-
-                // Объявляем и забиваем файл в документ  
+                string name, pwd, url_; // Новые переменные имени, пароля и адреса
+ 
                 XmlDocument xd = new XmlDocument();
                 FileStream fs = new FileStream(filepath, FileMode.Open);
                 xd.Load(fs);
+                XmlElement user = (XmlElement)xd.GetElementsByTagName("login")[0];
+                XmlElement pass = (XmlElement)xd.GetElementsByTagName("password")[0];    
+                XmlElement urll = (XmlElement)xd.GetElementsByTagName("URL")[0];
+               // Вставляем в переменные текст из тегов  
+                name = user.InnerText;
+                pwd = pass.InnerText;
+                url_ = urll.InnerText;
 
-                XmlNodeList list = xd.GetElementsByTagName("user"); // Создаем и заполняем лист по тегу "user"  
-                for (int i = 0; i < list.Count; i++)
-                {
-                    XmlElement id = (XmlElement)xd.GetElementsByTagName("user")[i];         // Забиваем id в переменную  
-                    XmlElement user = (XmlElement)xd.GetElementsByTagName("login")[i];      // Забиваем login в переменную  
-                    XmlElement pass = (XmlElement)xd.GetElementsByTagName("password")[i];   // Забиваем password в переменную  
-                    XmlElement urll = (XmlElement)xd.GetElementsByTagName("URL")[i];
-
-                    if (id.GetAttribute("id") == pid) // Если наткнулся на нужный айдишник  
-                    {
-                        // Вставляем в переменные текст из тегов  
-                        name = user.InnerText;
-                        pwd = pass.InnerText;
-                        url_ = urll.InnerText;
-
-                        // Заполняем поля   
-                        Login = name;
-                        Password = pwd;
-                        URL = url_;
-                        break;
-                    }
-                    else
-                    {
-                        // Чистим поля   
-                        Login = "";
-                        Password = "";
-                        URL = "";
-                    }
-                }
+               // Заполняем поля   
+                Login = name;
+                Password = pwd;
+                URL = url_;
+     
                 // Закрываем поток  
                 fs.Close();
             }
         }
         public string GetLogin_serversetup()
         {
-            this.ReadXMLDocumentServerSetup(ServerSetupFileName, "1");
+            this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return Login;
         }
 
         public string GetPassword_serversetup()
         {
-            this.ReadXMLDocumentServerSetup(ServerSetupFileName, "1");
+            this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return Password;
         }
         public string GetURL_serversetup()
         {
-            this.ReadXMLDocumentServerSetup(ServerSetupFileName, "1");
+            this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return URL;
         }
 
