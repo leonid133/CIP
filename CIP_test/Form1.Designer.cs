@@ -31,16 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pictureNoUpd = new System.Windows.Forms.PictureBox();
+            this.pictureUpd = new System.Windows.Forms.PictureBox();
+            this.textBoxNamePovestka = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label_time = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -54,16 +53,26 @@
             this.buttonSaveServerSetup = new System.Windows.Forms.Button();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonServerSetting = new System.Windows.Forms.Button();
+            this.pictureBoxMaterial = new System.Windows.Forms.PictureBox();
+            this.buttonkPovestke = new System.Windows.Forms.Button();
+            this.buttonNextMaterial = new System.Windows.Forms.Button();
+            this.buttonLastMaterial = new System.Windows.Forms.Button();
+            this.buttonFirst = new System.Windows.Forms.Button();
+            this.button90 = new System.Windows.Forms.Button();
+            this.textBoxQuestMat = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureNoUpd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUpd)).BeginInit();
             this.panelServerSetup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMaterial)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = global::CIP_test.Properties.Resources.logo;
+            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
             this.pictureBox1.Location = new System.Drawing.Point(3, 5);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(583, 98);
@@ -71,30 +80,11 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(151, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(239, 25);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Государственный Совет";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(151, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(223, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Республики Татарстан";
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.panel1);
-            this.flowLayoutPanel1.Controls.Add(this.textBox2);
+            this.flowLayoutPanel1.Controls.Add(this.listBox1);
+            this.flowLayoutPanel1.Controls.Add(this.listBox2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 103);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(583, 547);
@@ -102,9 +92,9 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pictureBox3);
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.pictureNoUpd);
+            this.panel1.Controls.Add(this.pictureUpd);
+            this.panel1.Controls.Add(this.textBoxNamePovestka);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label_time);
             this.panel1.Location = new System.Drawing.Point(3, 3);
@@ -112,36 +102,38 @@
             this.panel1.Size = new System.Drawing.Size(583, 127);
             this.panel1.TabIndex = 1;
             // 
-            // pictureBox3
+            // pictureNoUpd
             // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(536, 3);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(36, 29);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 4;
-            this.pictureBox3.TabStop = false;
+            this.pictureNoUpd.Image = ((System.Drawing.Image)(resources.GetObject("pictureNoUpd.Image")));
+            this.pictureNoUpd.Location = new System.Drawing.Point(536, 3);
+            this.pictureNoUpd.Name = "pictureNoUpd";
+            this.pictureNoUpd.Size = new System.Drawing.Size(36, 29);
+            this.pictureNoUpd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureNoUpd.TabIndex = 4;
+            this.pictureNoUpd.TabStop = false;
+            this.pictureNoUpd.Visible = false;
             // 
-            // pictureBox2
+            // pictureUpd
             // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(496, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(34, 32);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 3;
-            this.pictureBox2.TabStop = false;
+            this.pictureUpd.Image = ((System.Drawing.Image)(resources.GetObject("pictureUpd.Image")));
+            this.pictureUpd.Location = new System.Drawing.Point(496, 0);
+            this.pictureUpd.Name = "pictureUpd";
+            this.pictureUpd.Size = new System.Drawing.Size(34, 32);
+            this.pictureUpd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureUpd.TabIndex = 3;
+            this.pictureUpd.TabStop = false;
+            this.pictureUpd.Visible = false;
             // 
-            // textBox1
+            // textBoxNamePovestka
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(15, 38);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(557, 71);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "Повестка дня четырнадцатого заседания\r\nГосударственного Совета Республики\r\n";
+            this.textBoxNamePovestka.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxNamePovestka.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxNamePovestka.Location = new System.Drawing.Point(15, 38);
+            this.textBoxNamePovestka.Multiline = true;
+            this.textBoxNamePovestka.Name = "textBoxNamePovestka";
+            this.textBoxNamePovestka.Size = new System.Drawing.Size(557, 71);
+            this.textBoxNamePovestka.TabIndex = 2;
+            this.textBoxNamePovestka.Text = "Название повестки";
             // 
             // button1
             // 
@@ -151,6 +143,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "РУС/ТАТ";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             // 
             // label_time
             // 
@@ -159,22 +152,43 @@
             this.label_time.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label_time.Location = new System.Drawing.Point(12, 12);
             this.label_time.Name = "label_time";
-            this.label_time.Size = new System.Drawing.Size(126, 15);
+            this.label_time.Size = new System.Drawing.Size(167, 15);
             this.label_time.TabIndex = 0;
-            this.label_time.Text = "16 января 2014 года";
+            this.label_time.Text = "Дата проведения повестки";
             // 
-            // textBox2
+            // listBox1
             // 
-            this.textBox2.Location = new System.Drawing.Point(3, 136);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(580, 73);
-            this.textBox2.TabIndex = 2;
+            this.listBox1.BackColor = System.Drawing.SystemColors.Menu;
+            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Items.AddRange(new object[] {
+            "1. Вопрос повестки",
+            "2. Еще один вопрос повестки"});
+            this.listBox1.Location = new System.Drawing.Point(3, 143);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.ScrollAlwaysVisible = true;
+            this.listBox1.Size = new System.Drawing.Size(572, 404);
+            this.listBox1.TabIndex = 2;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
+            this.listBox1.SelectedValueChanged += new System.EventHandler(this.listBox1_SelectedValueChanged);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.listBox2.Location = new System.Drawing.Point(3, 560);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.TabIndex = 3;
             // 
             // backgroundWorker1
             // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // timer1
             // 
@@ -280,28 +294,109 @@
             this.buttonServerSetting.UseVisualStyleBackColor = true;
             this.buttonServerSetting.Click += new System.EventHandler(this.buttonServerSetting_Click);
             // 
+            // pictureBoxMaterial
+            // 
+            this.pictureBoxMaterial.Location = new System.Drawing.Point(3, 5);
+            this.pictureBoxMaterial.Name = "pictureBoxMaterial";
+            this.pictureBoxMaterial.Size = new System.Drawing.Size(577, 652);
+            this.pictureBoxMaterial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxMaterial.TabIndex = 6;
+            this.pictureBoxMaterial.TabStop = false;
+            this.pictureBoxMaterial.Visible = false;
+            // 
+            // buttonkPovestke
+            // 
+            this.buttonkPovestke.Location = new System.Drawing.Point(477, 12);
+            this.buttonkPovestke.Name = "buttonkPovestke";
+            this.buttonkPovestke.Size = new System.Drawing.Size(87, 39);
+            this.buttonkPovestke.TabIndex = 7;
+            this.buttonkPovestke.Text = "К повестке";
+            this.buttonkPovestke.UseVisualStyleBackColor = true;
+            this.buttonkPovestke.Visible = false;
+            this.buttonkPovestke.Click += new System.EventHandler(this.buttonkPovestke_Click);
+            // 
+            // buttonNextMaterial
+            // 
+            this.buttonNextMaterial.Location = new System.Drawing.Point(415, 593);
+            this.buttonNextMaterial.Name = "buttonNextMaterial";
+            this.buttonNextMaterial.Size = new System.Drawing.Size(100, 44);
+            this.buttonNextMaterial.TabIndex = 8;
+            this.buttonNextMaterial.Text = "Следующий материал";
+            this.buttonNextMaterial.UseVisualStyleBackColor = true;
+            this.buttonNextMaterial.Visible = false;
+            this.buttonNextMaterial.Click += new System.EventHandler(this.buttonNextMaterial_Click);
+            // 
+            // buttonLastMaterial
+            // 
+            this.buttonLastMaterial.Location = new System.Drawing.Point(60, 591);
+            this.buttonLastMaterial.Name = "buttonLastMaterial";
+            this.buttonLastMaterial.Size = new System.Drawing.Size(105, 46);
+            this.buttonLastMaterial.TabIndex = 9;
+            this.buttonLastMaterial.Text = "Предыдущий материал";
+            this.buttonLastMaterial.UseVisualStyleBackColor = true;
+            this.buttonLastMaterial.Visible = false;
+            this.buttonLastMaterial.Click += new System.EventHandler(this.buttonLastMaterial_Click);
+            // 
+            // buttonFirst
+            // 
+            this.buttonFirst.Location = new System.Drawing.Point(237, 593);
+            this.buttonFirst.Name = "buttonFirst";
+            this.buttonFirst.Size = new System.Drawing.Size(104, 44);
+            this.buttonFirst.TabIndex = 10;
+            this.buttonFirst.Text = "К началу";
+            this.buttonFirst.UseVisualStyleBackColor = true;
+            this.buttonFirst.Visible = false;
+            this.buttonFirst.Click += new System.EventHandler(this.buttonFirst_Click);
+            // 
+            // button90
+            // 
+            this.button90.Location = new System.Drawing.Point(38, 103);
+            this.button90.Name = "button90";
+            this.button90.Size = new System.Drawing.Size(75, 35);
+            this.button90.TabIndex = 11;
+            this.button90.Text = "Повернуть на 90";
+            this.button90.UseVisualStyleBackColor = true;
+            this.button90.Visible = false;
+            this.button90.Click += new System.EventHandler(this.button90_Click);
+            // 
+            // textBoxQuestMat
+            // 
+            this.textBoxQuestMat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxQuestMat.Location = new System.Drawing.Point(18, 12);
+            this.textBoxQuestMat.Multiline = true;
+            this.textBoxQuestMat.Name = "textBoxQuestMat";
+            this.textBoxQuestMat.Size = new System.Drawing.Size(453, 81);
+            this.textBoxQuestMat.TabIndex = 13;
+            this.textBoxQuestMat.Text = "Название текущего вопроса";
+            this.textBoxQuestMat.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 662);
+            this.Controls.Add(this.textBoxQuestMat);
+            this.Controls.Add(this.button90);
+            this.Controls.Add(this.buttonFirst);
+            this.Controls.Add(this.buttonLastMaterial);
+            this.Controls.Add(this.buttonNextMaterial);
+            this.Controls.Add(this.buttonkPovestke);
+            this.Controls.Add(this.pictureBoxMaterial);
             this.Controls.Add(this.buttonServerSetting);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.panelServerSetup);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Повестка совещание";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureNoUpd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUpd)).EndInit();
             this.panelServerSetup.ResumeLayout(false);
             this.panelServerSetup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMaterial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,18 +405,15 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox pictureUpd;
+        private System.Windows.Forms.TextBox textBoxNamePovestka;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label_time;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.PictureBox pictureNoUpd;
         private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
         private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
@@ -333,6 +425,15 @@
         private System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.Button buttonSaveServerSetup;
         private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.PictureBox pictureBoxMaterial;
+        private System.Windows.Forms.Button buttonkPovestke;
+        private System.Windows.Forms.Button buttonNextMaterial;
+        private System.Windows.Forms.Button buttonLastMaterial;
+        private System.Windows.Forms.Button buttonFirst;
+        private System.Windows.Forms.Button button90;
+        private System.Windows.Forms.TextBox textBoxQuestMat;
     }
 }
 

@@ -9,6 +9,7 @@ namespace CIP_test
     static class Program
     {
         /// <summary>
+        
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]

@@ -16,9 +16,9 @@ namespace CIP_test
 
         public Povestka()
         {
-            Question = new List<Questions>();
-            DatePovestka = new DateTime(2014, 1, 21);
-            LastLoadDate = new DateTime(1985, 4, 2);
+            this.Question = new List<Questions>();
+            this.DatePovestka = new DateTime(2014, 1, 21);
+            this.LastLoadDate = new DateTime(1985, 4, 2);
         }
 
         public Povestka(Povestka a)
@@ -26,11 +26,11 @@ namespace CIP_test
             this.LastLoadDate = a.LastLoadDate;
             this.DatePovestka = a.DatePovestka;
             this.Name = a.Name;
-            Question = new List<Questions>(a.Question);
+            this.Question = new List<Questions>(a.Question);
         }
         ~Povestka()
         {
-            Question.Clear();
+            //Question.Clear();
         }
         public void GenerateTestDATA()
         {
@@ -97,6 +97,10 @@ namespace CIP_test
         public void AddQuestion(Questions QuestionToAdd)
         {
             Question.Add(QuestionToAdd);
+        }
+        public string GetStringQuestAt(int id)
+        {
+            return this.Question.ElementAt(id).GetStringData();
         }
         public List<Questions> GetListQuestions()
         {

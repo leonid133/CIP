@@ -1,0 +1,9 @@
+C:\Users\User\Desktop\CIP\CIP_test\bin\Release\CIP_test.exe
+C:\Users\User\Desktop\CIP\CIP_test\bin\Release\CIP_test.pdb
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\CIP_test.Form1.resources
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\CIP_test.Properties.Resources.resources
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\CIP_test.exe
+C:\Users\User\Desktop\CIP\CIP_test\obj\x86\Release\CIP_test.pdb

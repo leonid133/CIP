@@ -11,14 +11,14 @@ namespace CIP_test
     {
         //private XmlDocument xmlDoc;
         private String Login, Password, URL;
-        private String ServerSetupFileName;
-        private String LocalPovestkaFileName;
+        
+       // private String LocalPovestkaFileName;
 
         public XML()
         {
             //xmlDoc = new XmlDocument();
-            ServerSetupFileName = "serversetup.xml";
-            LocalPovestkaFileName = "actual.xml";
+            
+            //LocalPovestkaFileName = "actual.xml";
         }
         ~XML()
         {
@@ -98,24 +98,24 @@ namespace CIP_test
                 fs.Close();
             }
         }
-        public string GetLogin_serversetup()
+        public string GetLogin_serversetup(string ServerSetupFileName)
         {
             this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return Login;
         }
 
-        public string GetPassword_serversetup()
+        public string GetPassword_serversetup(string ServerSetupFileName)
         {
             this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return Password;
         }
-        public string GetURL_serversetup()
+        public string GetURL_serversetup(string ServerSetupFileName)
         {
             this.ReadXMLDocumentServerSetup(ServerSetupFileName);
             return URL;
         }
 
-        public void SaveLoginPasswordURL_serversetup(string Login_, string Password_, string URL_)
+        public void SaveLoginPasswordURL_serversetup(string ServerSetupFileName, string Login_, string Password_, string URL_)
         {
             this.Login = Login_;
             this.Password = Password_;

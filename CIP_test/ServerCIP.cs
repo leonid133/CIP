@@ -16,13 +16,19 @@ namespace CIP_test
         private String password;
         private String PoveskaFileServerName;
         private String PoveskaFileLocalName;
+        private String ServerSetupFileName;
         private DateTime LastUpdate;
+        public Boolean internetConnection;
+        public Boolean updateStatus;
 
         public ServerCIP()
         {
+            internetConnection = false;
+            updateStatus = false;
             PoveskaFileServerName = "povestka.xml";
             PoveskaFileLocalName = "actual.xml";
-            LastUpdate = File.GetLastWriteTime(PoveskaFileLocalName);
+            ServerSetupFileName = "serversetup.xml";
+            LastUpdate = File.GetLastWriteTime(PoveskaFileServerName);
             LoadSetup();
         }
         ~ServerCIP()
@@ -32,15 +38,15 @@ namespace CIP_test
         private void SaveSetup()
         {
             XML Axml = new XML();
-            Axml.SaveLoginPasswordURL_serversetup(login, password, URL);
+            Axml.SaveLoginPasswordURL_serversetup(ServerSetupFileName, login, password, URL);
         }
 
         private void LoadSetup()
         {
             XML Axml = new XML();
-            URL = Axml.GetURL_serversetup();
-            login = Axml.GetLogin_serversetup();
-            password = Axml.GetPassword_serversetup();
+            URL = Axml.GetURL_serversetup(ServerSetupFileName);
+            login = Axml.GetLogin_serversetup(ServerSetupFileName);
+            password = Axml.GetPassword_serversetup(ServerSetupFileName);
         }
 
         public void SetLoginPasswordURL(string log, string pas, string url_)
@@ -145,34 +151,42 @@ namespace CIP_test
         private void LoadFileURL(string filename)
         {
             //загрузка файла повестки
-            // Get the object used to communicate with the server.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(URL + "/CIP/" + filename);
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            try
+            {
+                // Get the object used to communicate with the server.
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(URL + "/CIP/" + filename);
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-            // This example assumes the FTP site uses anonymous logon.
-            request.Credentials = new NetworkCredential(login, password);
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                // This example assumes the FTP site uses anonymous logon.
+                request.Credentials = new NetworkCredential(login, password);
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
 
-            File.WriteAllText(filename, reader.ReadToEnd(), Encoding.UTF32);
+                File.WriteAllText(filename, reader.ReadToEnd(), Encoding.UTF32);
 
-            //Console.WriteLine(reader.ReadToEnd());
+                //Console.WriteLine(reader.ReadToEnd());
 
-            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
+                Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
 
-            reader.Close();
-            response.Close(); 
+                reader.Close();
+                response.Close();
+                LastUpdate = File.GetLastWriteTime(PoveskaFileServerName);
+                
+            }
+            catch { updateStatus = false; }
             
         }
 
         public void UpdatePovestkaXML()
         {
-            if (TestInternet())
+            //if (TestInternet())  //у меня на работе пинг перестал проходить через файервол, отключил на время
             {
-                //if (LastUpdate.CompareTo(TestXMLFileDate(PoveskaFileServerName)) < 0)
+                internetConnection = true;
+                if (LastUpdate.CompareTo(TestXMLFileDate(PoveskaFileServerName)) < 0)
                 {
+                    updateStatus = false;
                     LoadFileURL(PoveskaFileServerName);
                     XML Bxml = new XML();
                     Povestka TempPovestka = new Povestka();
@@ -180,12 +194,18 @@ namespace CIP_test
                     List<string> AllMaterials = new List<string>(TempPovestka.GetAllMaterials());
                     //Скачивание материалов повестки
                     LoadFileURL(AllMaterials);
-                  
+
                     //Преобразование повестки в сохраняемую
 
                     TempPovestka.SaveToFile(PoveskaFileLocalName);
+                    
                 }
+                else { updateStatus = true; }
             }
+           /* else
+            {
+                internetConnection = false;
+            }*/
         }
                 
     } 
