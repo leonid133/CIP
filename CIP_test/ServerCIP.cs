@@ -116,37 +116,41 @@ namespace CIP_test
         private void LoadFileURL(List<string> ListFile)
         {
             //загрузка файлов материалов
-            for (int i = 0; i < ListFile.Count; i++)
+            try
             {
-                string filename = ListFile.ElementAt(i);
-                bool status = true;
-                string webError = string.Empty;
-                FtpWebResponse response = null;
-                Stream ftpStream = null;
-                FileStream outputStream = null;
-                //FtpDownloadToFolder = @"\\servername\SharedFolder\";
-
-                FtpWebRequest reqFTP = WebRequest.Create(new Uri(URL + "/CIP/" + filename)) as FtpWebRequest;
-                reqFTP.Credentials = new NetworkCredential(login, password);
-                reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-                reqFTP.UseBinary = true;
-                //reqFTP.Timeout = FtpTimeout;
-                response = reqFTP.GetResponse() as FtpWebResponse;
-                ftpStream = response.GetResponseStream();
-
-                outputStream = new FileStream(filename, FileMode.Create);
-
-                long cl = response.ContentLength;
-                int bufferSize = 2048;
-                byte[] buffer = new byte[bufferSize];
-                int readCount = ftpStream.Read(buffer, 0, bufferSize);
-
-                while (readCount > 0)
+                for (int i = 0; i < ListFile.Count; i++)
                 {
-                    outputStream.Write(buffer, 0, readCount);
-                    readCount = ftpStream.Read(buffer, 0, bufferSize);
+                    string filename = ListFile.ElementAt(i);
+                    bool status = true;
+                    string webError = string.Empty;
+                    FtpWebResponse response = null;
+                    Stream ftpStream = null;
+                    FileStream outputStream = null;
+                    //FtpDownloadToFolder = @"\\servername\SharedFolder\";
+
+                    FtpWebRequest reqFTP = WebRequest.Create(new Uri(URL + "/CIP/" + filename)) as FtpWebRequest;
+                    reqFTP.Credentials = new NetworkCredential(login, password);
+                    reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
+                    reqFTP.UseBinary = true;
+                    //reqFTP.Timeout = FtpTimeout;
+                    response = reqFTP.GetResponse() as FtpWebResponse;
+                    ftpStream = response.GetResponseStream();
+
+                    outputStream = new FileStream(filename, FileMode.Create);
+
+                    long cl = response.ContentLength;
+                    int bufferSize = 2048;
+                    byte[] buffer = new byte[bufferSize];
+                    int readCount = ftpStream.Read(buffer, 0, bufferSize);
+
+                    while (readCount > 0)
+                    {
+                        outputStream.Write(buffer, 0, readCount);
+                        readCount = ftpStream.Read(buffer, 0, bufferSize);
+                    }
                 }
             }
+            catch { updateStatus = false; }
         }
         private void LoadFileURL(string filename)
         {
